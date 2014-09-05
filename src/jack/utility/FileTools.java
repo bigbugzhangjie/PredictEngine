@@ -13,7 +13,33 @@ import org.apache.commons.io.FileUtils;
 
 public class FileTools extends FileUtils {
 	
-	public static List<String> getLines(File file){
+	public static Set<String> getLineSet(File file){
+		Set<String> ret = new HashSet<String>();
+		BufferedReader br = null;
+		try {
+			// 构造BufferedReader对象
+			br = new BufferedReader(new FileReader(file));
+
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				ret.add(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// 关闭BufferedReader
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return ret;		
+	}
+	
+	public static List<String> getLineList(File file){
 		List<String> ret = new ArrayList<String>();
 		BufferedReader br = null;
 		try {
