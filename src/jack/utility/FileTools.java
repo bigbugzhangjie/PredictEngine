@@ -12,7 +12,42 @@ import java.util.Set;
 import org.apache.commons.io.FileUtils;
 
 public class FileTools extends FileUtils {
+	/**
+	 * 统计file中str出现的次数
+	 * @param str
+	 * @return
+	 */
+	public static int count(File file,String str){
+		int ret = 0;
+		BufferedReader br = null;
+		try {
+			// 构造BufferedReader对象
+			br = new BufferedReader(new FileReader(file));
+
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				ret += StringTools.count(line, str);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// 关闭BufferedReader
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return ret;	
+	}
 	
+	/**
+	 * 获取file中不重复的行
+	 * @param file
+	 * @return
+	 */
 	public static Set<String> getLineSet(File file){
 		Set<String> ret = new HashSet<String>();
 		BufferedReader br = null;
@@ -65,6 +100,13 @@ public class FileTools extends FileUtils {
 		return ret;		
 	}
 	
+	/**
+	 * 获取file中的某一列
+	 * @param file
+	 * @param index	列号，从0开始计数
+	 * @param sep	列分隔符
+	 * @return
+	 */
 	public static Set<String> getColumnSet(File file, int index, String sep) {
 		return new HashSet<String>(getColumnList(file,index,sep,true));
 	}
@@ -114,5 +156,12 @@ public class FileTools extends FileUtils {
 			}
 		}
 		return ret;
+	}
+	
+	public static void main(String[] args) throws Exception{
+		String dir = "E:/corpus/开放数据/微博/";
+		File file = new File(dir+"relsemple.json");//relsemple.json
+		String str = ",";
+		System.out.println(count(file,str));
 	}
 }
