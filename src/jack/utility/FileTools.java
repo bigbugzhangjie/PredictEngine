@@ -164,4 +164,45 @@ public class FileTools extends FileUtils {
 		String str = ",";
 		System.out.println(count(file,str));
 	}
+	/**
+	 * 从file中随机的抽取n行
+	 * @param file
+	 * @param n
+	 * @return
+	 */
+	public List<String> sampling(File file,int n){
+		return null;
+	}
+	public void shuffle(File source,File target){
+		
+	}
+	public void copy(File source,File target){
+		
+	}
+	public void move(File source,File target){
+		
+	}
+	public void writeFile(List<String> lines,File file){
+		
+	}
+//	public void mergeFilesBy......
+	public void merge(List<File> files,File target){
+		
+	}
+	public void cat(List<File> files, File target){
+		merge(files, target);
+	}
+	public List<File> filter(File dir, List<String> kws){
+		return null;
+	}
+	/**
+	 * 
+	 * @param dir
+	 * @param kws
+	 * @param type	0:文件名中任何位置包含kw； 1:以kw开头；2:以kw结尾；3:以kw开头或结尾
+	 * @return
+	 */
+	public List<File> filter(File dir, List<String> kws, int type){
+		return null;
+	}
 }
