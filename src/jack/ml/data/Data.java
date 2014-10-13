@@ -3,8 +3,8 @@ package jack.ml.data;
 public class Data {
 	int id;
 	String name;
-	int label;
-	String body;
+	int label;	
+	String body;	//text
 	FeatureVector vec;
 	
 	public Data(int id, FeatureVector vec){
@@ -12,6 +12,13 @@ public class Data {
 		this.vec = vec;
 	}
 	public Data(int id, String vecStr){
+		//TODO
+	}
+	public Data(String name, FeatureVector vec){
+		this.name = name;
+		this.vec = vec;
+	}
+	public Data(String name, String vecStr){
 		//TODO
 	}
 	public int getId() {
