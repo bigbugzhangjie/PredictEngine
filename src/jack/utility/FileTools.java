@@ -10,7 +10,12 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
-
+/**
+ * 
+ * @author bigbug
+ * @since Sep 3, 2014
+ * @modified Oct 13, 2014
+ */
 public class FileTools extends FileUtils {
 	/**
 	 * 统计file中str出现的次数

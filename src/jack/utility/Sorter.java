@@ -8,6 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 
+ * @author bigbug
+ * @since Oct 13, 2014
+ * @modified Oct 13, 2014
+ */
 public class Sorter {
 
 	public static <K, V extends Comparable<? super V>> Map<K, V> sortByValue(

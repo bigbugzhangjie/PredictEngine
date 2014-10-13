@@ -1,5 +1,14 @@
 package jack.utility;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+/**
+ * 
+ * @author bigbug
+ * @since Sep 3, 2014
+ * @modified Oct 13, 2014
+ */
 public class StringTools {
 
 	/**
@@ -43,6 +52,25 @@ public class StringTools {
 			}
 		}
 		return count;
+	}
+	
+	public static int getTermCount(Collection<String> dict, String term){
+		return 0;
+	}
+	
+	/**
+	 * 
+	 * @param sentence
+	 * @return
+	 */
+	public static List<String> chunk(String sentence){
+		List<String> ret = new ArrayList<String>();
+		return ret;
+	}
+	
+	public static String trim(String str){
+		String ret = str;
+		return ret;
 	}
 
 	public static void main(String[] args) {
