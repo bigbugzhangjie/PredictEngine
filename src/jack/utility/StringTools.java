@@ -70,6 +70,15 @@ public class StringTools {
 	
 	public static String trim(String str){
 		String ret = str;
+		ret = ret.trim();
+		//TODO add other logic below
+		return ret;
+	}
+	public static String[] trim(String[] str){
+		String[] ret = new String[]{};
+		for(int i=0; i<str.length;i++){
+			ret[i] = trim(str[i]);
+		}
 		return ret;
 	}
 

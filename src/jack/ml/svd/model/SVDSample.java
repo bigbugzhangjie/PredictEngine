@@ -17,4 +17,9 @@ public class SVDSample {
 		return null;
 	}
 
+	public static SVDSample loadData(String[] tst) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

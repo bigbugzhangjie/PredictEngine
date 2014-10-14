@@ -2,6 +2,7 @@ package jack.ml.svd;
 
 import jack.ml.data.Feature;
 import jack.ml.svd.model.SVDSparseVector;
+import jack.utility.StringTools;
 
 import java.util.Collection;
 
@@ -14,7 +15,7 @@ public class SVDSampleExample {
 	public static SVDSampleExample loadData(String[] sv){
 		SVDSampleExample ret = new SVDSampleExample();
 		int u_num, i_num, g_num;
-		sv = StringUtility.trim(sv);
+		sv = StringTools.trim(sv);
 		
 		ret.score = Float.parseFloat(sv[0]);
 		g_num = Integer.parseInt(sv[1]);
