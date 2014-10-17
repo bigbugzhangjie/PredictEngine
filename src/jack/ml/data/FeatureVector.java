@@ -2,9 +2,14 @@ package jack.ml.data;
 
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * 
+ * @author bigbug
+ * @since Aug 15, 2014
+ * @modified Oct 15, 2014
+ */
 public class FeatureVector {
-	public static boolean needNormalization = false; //生成feature之后是否还需要做归一化
+	public static boolean needNormalization = false; //锟斤拷锟絝eature之锟斤拷锟角凤拷锟斤拷要锟斤拷锟斤拷一锟斤拷
 	HashMap<Integer,Float> vector = new HashMap<Integer,Float>(); // index:value
 	
 	public FeatureVector(List<Feature> features){
