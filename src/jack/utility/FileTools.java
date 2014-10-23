@@ -1,8 +1,10 @@
 package jack.utility;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -163,38 +165,33 @@ public class FileTools extends FileUtils {
 		return ret;
 	}
 	
-	public static void main(String[] args) throws Exception{
-		String dir = "E:/corpus/开放数据/微博/";
-		File file = new File(dir+"relsemple.json");//relsemple.json
-		String str = ",";
-		System.out.println(count(file,str));
-	}
+
 	/**
 	 * 从file中随机的抽取n行
 	 * @param file
 	 * @param n
 	 * @return
 	 */
-	public List<String> sampling(File file,int n){
+	public static List<String> sampling(File file,int n){
 		return null;
 	}
-	public void shuffle(File source,File target){
+	public static void shuffle(File source,File target){
 		
 	}
-	public void copy(File source,File target){
+	public static void copy(File source,File target){
 		
 	}
-	public void move(File source,File target){
+	public static void move(File source,File target){
 		
 	}
-	public void writeFile(List<String> lines,File file){
+	public static void writeFile(List<String> lines,File file){
 		
 	}
 //	public void mergeFilesBy......
-	public void merge(List<File> files,File target){
+	public static void merge(List<File> files,File target){
 		
 	}
-	public void cat(List<File> files, File target){
+	public static void cat(List<File> files, File target){
 		merge(files, target);
 	}
 	public List<File> filter(File dir, List<String> kws){
@@ -207,7 +204,70 @@ public class FileTools extends FileUtils {
 	 * @param type	0:文件名中任何位置包含kw； 1:以kw开头；2:以kw结尾；3:以kw开头或结尾
 	 * @return
 	 */
-	public List<File> filter(File dir, List<String> kws, int type){
+	public static List<File> filter(File dir, List<String> kws, int type){
 		return null;
+	}
+	/**
+	 * 将输入文件按照行数分片，存于指定目录中。
+	 * @param sourceFile	输入文件
+	 * @param targetDir	输出文件所在目录
+	 * @param rows	分片文件的最大行数
+	 * @return	返回值为分割文件数，出错时返回-1
+	 */
+	public static int splitByLine(File sourceFile, File targetDir,int rows) {
+		int ret=0;
+		if (!sourceFile.exists() || rows <= 0 || sourceFile.isDirectory()) {
+			System.out.println("源文件不存在或者输入了错误的行数");
+			return -1;
+		}
+		if (targetDir.exists()) {
+			if (!targetDir.isDirectory()) {
+				System.out.println("目标文件夹错误,不是一个文件夹");
+				return -1;
+			}
+		} else {
+			targetDir.mkdirs();
+		}
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(sourceFile));
+			BufferedWriter bw = null;
+			String str = "";
+			String tempData = br.readLine();
+			int i = 1;
+			while (tempData != null) {
+				str += tempData + "\r\n";
+				if (i % rows == 0) {
+					bw = new BufferedWriter(new FileWriter(new File(
+							targetDir.getAbsolutePath() + "/" + ret + "_"
+									+ sourceFile.getName())));
+					bw.write(str);
+					bw.close();
+					str = "";
+					ret += 1;
+				}
+				i++;
+				tempData = br.readLine();
+			}
+			if ((i - 1) % rows != 0) {
+				bw = new BufferedWriter(new FileWriter(new File(
+						targetDir.getAbsolutePath() + "/" + ret + "_"
+								+ sourceFile.getName())));
+				bw.write(str);
+				bw.close();
+				br.close();
+				ret += 1;
+			}
+			System.out.println("文件分割结束,共分割成了" + ret + "个文件");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+		
+	public static void main(String[] args) throws Exception{
+		String dir = "E:/corpus/开放数据/微博/";
+		File file = new File(dir+"relsemple.json");//relsemple.json
+		String str = ",";
+		System.out.println(count(file,str));
 	}
 }
