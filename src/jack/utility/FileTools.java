@@ -5,18 +5,22 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+
+import test.FileNameSelector;
 /**
  * 
  * @author bigbug
  * @since Sep 3, 2014
- * @modified Oct 13, 2014
+ * @modified Nov 6, 2014
  */
 public class FileTools extends FileUtils {
 	/**
@@ -165,6 +169,72 @@ public class FileTools extends FileUtils {
 		return ret;
 	}
 	
+	/**
+	 * 从file中的每行抽取指定的多列
+	 * @param file	目标文件
+	 * @param indecies	需要抽取的各个列的index（从0开始计数）
+	 * @param sep	列分割符
+	 * @param ignore	对index报错的处理： true:跳过该行继续处理下一行；	false:出错列中填入null,以保证List的size与file的行数一致;
+	 * @return
+	 */
+	public static HashMap<Integer,ArrayList<String>> getMultiColumn(File file, ArrayList<Integer> indecies, String sep,boolean ignore) {
+		HashMap<Integer,ArrayList<String>> ret = new HashMap<Integer,ArrayList<String>>();
+		if(indecies==null || indecies.size()==0){
+			return ret;
+		}		
+		
+		int maxIdx = -1;
+		for(int i : indecies){
+			if(i>maxIdx){
+				maxIdx =i;
+			}
+		}
+		
+		BufferedReader br = null;
+		try {
+			// 构造BufferedReader对象
+			br = new BufferedReader(new FileReader(file));
+
+			String line = null;
+			int linenum = 0;
+			boolean overFlow = false;
+			while ((line = br.readLine()) != null) {
+				ArrayList<String> tar = new ArrayList<String>();
+				overFlow = false;
+				String[] cols = line.split(sep);
+				for(int i : indecies){
+					try{
+						tar.add(cols[i]);
+					}catch(Exception overflow){
+						if (ignore){
+							System.err.println("index overflow error in "+linenum+" line.");
+							overFlow = true;
+							break;
+						}else{
+							tar.add(null);
+						}
+					}
+				}	
+				if(!overFlow){
+					ret.put(linenum, tar);
+				}
+				linenum++;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// 关闭BufferedReader
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return ret;
+	}
+	
 
 	/**
 	 * 从file中随机的抽取n行
@@ -201,12 +271,37 @@ public class FileTools extends FileUtils {
 	 * 
 	 * @param dir
 	 * @param kws
-	 * @param type	0:文件名中任何位置包含kw； 1:以kw开头；2:以kw结尾；3:以kw开头或结尾
+	 * @param type	0:文件名中任何位置包含kw;  1:以kw开头;  2:以kw结尾;  3:以kw开头或结尾; 
 	 * @return
 	 */
-	public static List<File> filter(File dir, List<String> kws, int type){
-		return null;
+	public static File[] filter(File dir, String kw, int type) {
+		final int t = type;
+		final String keyword = kw;
+		// 因为过滤器FilenameFilter接口中只有一个方法需要实现,所以就用匿名内部类
+		return dir.listFiles(
+				new FilenameFilter(){
+					@Override
+					public boolean accept(File file, String name){
+						// 这里的file是dir引用所指的对象,name就是需要过滤的内容
+						switch (t) { // 1:以kw开头；2:以kw结尾；3:以kw开头或结尾; 4:包含kw
+						case 1:
+							return name.startsWith(keyword);
+						case 2:
+							return name.endsWith(keyword);
+						case 3:
+							return (name.startsWith(keyword) || name.endsWith(keyword));
+						case 0:
+							return name.contains(keyword);
+						default:
+							return false;
+						}
+					}		
+				}
+		);
+
 	}
+	
+	
 	/**
 	 * 将输入文件按照行数分片，存于指定目录中。
 	 * @param sourceFile	输入文件
@@ -265,9 +360,22 @@ public class FileTools extends FileUtils {
 	}
 		
 	public static void main(String[] args) throws Exception{
-		String dir = "E:/corpus/开放数据/微博/";
-		File file = new File(dir+"relsemple.json");//relsemple.json
-		String str = ",";
-		System.out.println(count(file,str));
+		// unitest: count()
+//		String dir = "E:/corpus/开放数据/微博/";
+//		File file = new File(dir+"relsemple.json");//relsemple.json
+//		String str = ",";
+//		System.out.println(count(file,str));
+		
+		// unitest: filter()		
+		File directory = new File("/home/bigbug/adt-workspace/vcards");
+		String extendfilename = ".vcf";//".vcf"; "0";
+		int type = 2,i=0;		
+		// 列出所有.vcf文件
+		File[] retfiles = FileTools.filter(directory, extendfilename, type);
+		System.out.println("type:"+ type+"\tnumber:"+retfiles.length);
+		for (File file : retfiles) {
+			i++;
+			System.out.println("\t"+i+":\t" + file.getName());
+		}
 	}
 }
