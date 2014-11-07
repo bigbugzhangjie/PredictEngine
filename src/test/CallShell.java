@@ -25,9 +25,9 @@ public class CallShell {
 
 	public static void withParam() {
 		try {
-			String[] commands = new String[] { "find", ".", "-name", "*java*",
-					"-print" };
-
+//			String[] commands = new String[] { "find", ".", "-name", "*java*","-print" };
+			String[] commands = new String[] {"sh","/home/bigbug/temp/test.sh"};
+			
 			Process process = Runtime.getRuntime().exec(commands);
 
 			InputStreamReader ir = new InputStreamReader(
@@ -44,7 +44,7 @@ public class CallShell {
 
 	public static void script() {
 		try {
-			String commands = "/root/test/checkfile.sh";
+			String commands = "/home/bigbug/temp/test.sh";
 
 			Process process = Runtime.getRuntime().exec(commands);
 			InputStreamReader ir = new InputStreamReader(
@@ -61,8 +61,9 @@ public class CallShell {
 	}
 
 	public static void main(String[] args) throws IOException {
-		 CallShell.simple();
-//		TestShell.withParam();
+//		 CallShell.simple();
+		CallShell.withParam();
+//		CallShell.script();
 	}
 
 }

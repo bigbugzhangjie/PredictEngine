@@ -56,22 +56,32 @@ public class Timer {
 		}
 		return end-start;
 	}
-	public static String toString(long time){
-		int total = (int)time/1000;
+	
+	/**
+	 * 将所消耗的时间（毫秒）换算成小时-分-秒；
+	 * @param cost
+	 * @return
+	 */
+	public static String toString(long cost){
+		int total = (int)cost/1000;
 		int hour = Math.floorDiv(total, 3600);
 		total = total - 3600*hour;
 		int min = Math.floorDiv(total, 60);
 		total = total - 60*min;
-		String ret = " "+hour+"h"+min+"m"+total+"s";
+		String ret = " "+hour+"h-"+min+"m-"+total+"s";
 //		System.out.println(ret);
 		return ret;
 	}
+	
 	public static void print(long t){
 		System.out.println(Timer.toString(t));
 	}
+	/**
+	 * 打印各个时间点的时间
+	 */
 	public void printAll(){
 		for(String s : list){
-			System.out.println(s+"\t"+Timer.toString(get(s)));
+			System.out.println("phase: "+s+"\tcost:"+Timer.toString(get(s)));
 		}
 	}
 	public long getStart(){

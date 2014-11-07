@@ -12,12 +12,7 @@ public class TestDateFormat {
 		System.out.println(str);
 		
 //		System.out.println(Long.MAX_VALUE);
-		
-//		File dir = new File("/home/bigbug/.android/avd");
-//		System.out.println(dir.getAbsolutePath());
-//		System.out.println(dir.getCanonicalPath());
-//		System.out.println(dir.getName());
-//		System.out.println(dir.getPath());
+
 	}
 
 }
