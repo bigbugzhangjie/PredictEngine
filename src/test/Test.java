@@ -1,10 +1,11 @@
 package test;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Test {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		File test = new File("/home/bigbug/workspace/AppCrawler/templates/template.sh");
 		System.out.println(test.getPath()); //  /home/bigbug/workspace/AppCrawler/templates/template.sh
 		System.out.println(test.getAbsolutePath());// 同上
@@ -12,10 +13,11 @@ public class Test {
 		System.out.println(test.getParent()); //  /home/bigbug/workspace/AppCrawler/templates
 		
 		System.out.println("==========================");
-		test = new File("test/test.txt");
+		test = new File("test/temp.txt");
 		System.out.println(test.getPath()); //  test/test.txt
 		System.out.println(test.getName()); //  test.txt
 		System.out.println(test.getParent()); //  test
+		System.out.println(test.getAbsoluteFile().getParent()); // /home/bigbug/workspace/PredictEngine/test
 		System.out.println(test.getAbsolutePath());// /home/bigbug/workspace/PredictEngine/test/test.txt
 		
 		
