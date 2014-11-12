@@ -81,14 +81,45 @@ public class StringTools {
 		}
 		return ret;
 	}
+	
+	/**
+	 * 对pos中指定位置的字符，用m代替。如：13987654321->139****4321
+	 * @param in
+	 * @param m	 例“*”
+	 * @param pos	需要替换的字符所在的位置（从0计数，小于0忽略，大于字符串长度也忽略）
+	 * @return
+	 */
+	public static String replace(String in, char m,int[] pos){
+		if(pos==null || pos.length<=0){
+			return in;
+		}
+		String ret = "";
+		char[] ca = in.toCharArray();
+		int len = ca.length;
+		for(int i=0;i<pos.length;i++){
+			int idx = pos[i];
+			if(idx<len && idx>=0){
+				ca[idx]=m;
+			}
+		}
+		for(int i=0;i<len;i++){
+			ret +=ca[i];
+		}		
+		return ret;
+	}
 
 	public static void main(String[] args) {
-		// test: count(String str, String sub)
-		// finished!
-		String str = "aaaaaa";
-		String sub = "aaaa";
-		System.out.println(count(str,sub));
-
+//		// test: count(String str, String sub)
+//		String str = "aaaaaa";
+//		String sub = "aaaa";
+//		System.out.println(count(str,sub));
+		
+//		//replace(String in, char m,int[] pos)
+//		String in = "13987654321";
+//		char m = '*';
+//		int[] p = {3,8,5,0};
+//		System.out.println(replace(in,m,p));
+		
 	}
 	
 
