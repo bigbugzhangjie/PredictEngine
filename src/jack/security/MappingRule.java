@@ -5,7 +5,9 @@ import java.util.List;
 
 public class MappingRule {
 	String name;
-	List<String> params;
+	String dataTypeName;//所对应的数据类型的name
+	String funcName; // 具体使用的映射函数name
+	List<String> params;//映射函数需要的参数
 	
 	public MappingRule(){
 		
@@ -13,7 +15,7 @@ public class MappingRule {
 	
 	/**
 	 * 从string中读取MappingRule。
-	 * @param str	第一列为name，其他列为参数；各列用tab分割
+	 * @param str	第一列为name，第二列为所对应的数据类型的name，第三列为具体使用的映射函数name，其他列为映射函数需要的参数；各列用tab分割
 	 * @return
 	 */
 	public MappingRule load(String str){
@@ -51,10 +53,12 @@ public class MappingRule {
 	}
 
 	/**
-	 * 第一列为name，其他列为参数；各列用tab分割
+	 * 第一列为name，第二列为所对应的数据类型的name，
+	 * 第三列为具体使用的映射函数name，其他列为映射函数需要的参数；
+	 * 各列用tab分割
 	 */
 	public String toString(){
-		String ret = name;
+		String ret = name+"\t"+dataTypeName+"\t"+funcName;
 		if(params!=null && params.size()>0){
 			for(String s : params){
 				ret += "\t"+s;

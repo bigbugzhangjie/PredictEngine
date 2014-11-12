@@ -1,5 +1,7 @@
 package jack.security.datatype;
 
+import jack.security.MappingRule;
+
 public class SupportedType {
 	
 	/**
@@ -26,5 +28,5 @@ public class SupportedType {
 	public static final String  BOOLEAN = "BOOLEAN";
 	public static final String  DATE = "DATE";
 	
-//	DATE, ENUM, STRING, GRADE, INT, FLOAT, DOUBLE,BOOLEAN
+
 }

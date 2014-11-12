@@ -1,4 +1,6 @@
-package jack.security;
+package jack.security.confuser;
+
+import jack.security.MappingRule;
 
 import java.util.ArrayList;
 

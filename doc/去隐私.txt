@@ -5,5 +5,5 @@ MappingRule: 数据去隐私化处理时，每个字段对应一条映射规则�
 Traveler: 遍历数据，为各个字段寻找合适的参数，用于生成MappingRule；
 Converter: 根据输入的数据，和指定的MappingRule，对数据进行去隐私化处理；
 
-Confuser:每个SupportedType都应该实现该接口；
-Function:常用的映射函数；
+Confuser:每个具体的SupportedType都应该实现该接口；
+Function:包含一些static的常用的映射函数；
