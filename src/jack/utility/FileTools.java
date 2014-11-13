@@ -3,6 +3,7 @@ package jack.utility;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
@@ -85,10 +86,16 @@ public class FileTools extends FileUtils {
 		return ret;		
 	}
 	
-	public static List<String> getLineList(File file){
+	/**
+	 * 按顺序读取文件中的每一行
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	public static List<String> getLineList(File file) throws IOException{
 		List<String> ret = new ArrayList<String>();
 		BufferedReader br = null;
-		try {
+//		try {
 			// 构造BufferedReader对象
 			br = new BufferedReader(new FileReader(file));
 
@@ -96,18 +103,18 @@ public class FileTools extends FileUtils {
 			while ((line = br.readLine()) != null) {
 				ret.add(line);
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		} finally {
 			// 关闭BufferedReader
 			if (br != null) {
-				try {
+//				try {
 					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
 			}
-		}
+//		}
 		return ret;		
 	}
 	

@@ -12,10 +12,8 @@ public class Function {
 	 * @param params	[均值，标准差]
 	 * @return
 	 */
-	public static float standardize(float in,ArrayList<String> params){
-		float ret = 0f;
-		//TODO
-		return ret;
+	public static float standardize(float mean,float var,float in){
+		return (in - mean)/var;
 	}
 	
 	/**

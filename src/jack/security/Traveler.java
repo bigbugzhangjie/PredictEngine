@@ -8,6 +8,11 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 
+/**
+ * 通过遍历给定的原始数据集，生成映射规则，确定每个mapping rule的参数；
+ * @author bigbug
+ *
+ */
 public class Traveler {
 	Definer definer;
 	Collection<RawSample> corpus;

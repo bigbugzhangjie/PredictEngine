@@ -4,7 +4,7 @@ import jack.security.MappingRule;
 
 import java.util.ArrayList;
 
-public class ORDINAL extends AbstractType{
+public class ORDINAL extends SuperType{
 
 	@Override
 	public ArrayList<String> confuse(String in) {
