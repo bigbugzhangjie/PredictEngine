@@ -3,20 +3,18 @@ package jack.utility;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
-
-import test.FileNameSelector;
 /**
  * 
  * @author bigbug
@@ -252,8 +250,17 @@ public class FileTools extends FileUtils {
 	public static List<String> sampling(File file,int n){
 		return null;
 	}
-	public static void shuffle(File source,File target){
-		
+	
+	/**
+	 * 将source文件中的各个行打乱顺序后写入target文件
+	 * @param source
+	 * @param target
+	 * @throws IOException
+	 */
+	public static void shuffle(File source,File target) throws IOException{
+		List<String> lines = getLineList(source);
+	    Collections.shuffle(lines);  
+	    writeFile(lines,target,false);
 	}
 	public static void copy(File source,File target){
 		
@@ -261,8 +268,19 @@ public class FileTools extends FileUtils {
 	public static void move(File source,File target){
 		
 	}
-	public static void writeFile(List<String> lines,File file){
-		
+	/**
+	 * 
+	 * @param lines	
+	 * @param file	要写入的目标文件
+	 * @param append	是否以追加的方式写入。true：在已有文件的结尾写入；false：覆盖原文件
+	 * @throws IOException 
+	 */
+	public static void writeFile(List<String> lines,File file,boolean append) throws IOException{
+		FileWriter w = new FileWriter(file,append);
+		for(String l : lines){
+			w.write(l+"\n");
+		}
+		w.close();		
 	}
 //	public void mergeFilesBy......
 	public static void merge(List<File> files,File target){
@@ -373,16 +391,25 @@ public class FileTools extends FileUtils {
 //		String str = ",";
 //		System.out.println(count(file,str));
 		
-		// unitest: filter()		
-		File directory = new File("/home/bigbug/adt-workspace/vcards");
-		String extendfilename = ".vcf";//".vcf"; "0";
-		int type = 2,i=0;		
-		// 列出所有.vcf文件
-		File[] retfiles = FileTools.filter(directory, extendfilename, type);
-		System.out.println("type:"+ type+"\tnumber:"+retfiles.length);
-		for (File file : retfiles) {
-			i++;
-			System.out.println("\t"+i+":\t" + file.getName());
-		}
+		
+//		// unitest: filter()		
+//		File directory = new File("/home/bigbug/adt-workspace/vcards");
+//		String extendfilename = ".vcf";//".vcf"; "0";
+//		int type = 2,i=0;		
+//		// 列出所有.vcf文件
+//		File[] retfiles = FileTools.filter(directory, extendfilename, type);
+//		System.out.println("type:"+ type+"\tnumber:"+retfiles.length);
+//		for (File file : retfiles) {
+//			i++;
+//			System.out.println("\t"+i+":\t" + file.getName());
+//		}
+		
+		
+		File in = new File("/home/bigbug/adt-workspace/data/zhangyun/test400");
+		File out = new File("/home/bigbug/adt-workspace/data/zhangyun/test400-2");
+		shuffle(in,out);
+		
+		
+		System.out.println("Finished!");
 	}
 }
