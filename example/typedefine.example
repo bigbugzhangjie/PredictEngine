@@ -1,0 +1,13 @@
+name	STRING
+ID	STRING
+cell	STRING
+address	STRING
+email	STRING
+sex	NOMINAL	F	M
+age	INT
+price	INT
+registDay	DATE
+duration	INT
+payNum	INT
+channel	INT
+carNum	STRING

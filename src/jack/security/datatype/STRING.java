@@ -2,12 +2,14 @@ package jack.security.datatype;
 
 import jack.security.MappingRule;
 import jack.security.confuser.Function;
+import jack.utility.StringTools;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class STRING extends SuperType {
 	public static final String MASK="MASK";
+//	public static final String REPLACE="REPL";
 	
 	public STRING(String n,MappingRule rule){
 		super(n);
@@ -27,7 +29,7 @@ public class STRING extends SuperType {
 		String out = "";
 		switch(func){
 		case MASK:
-			out = String.valueOf(standardize(in,params));
+			out = mask(in,params);
 			break;
 //		case xxxxx:
 		}
@@ -38,16 +40,23 @@ public class STRING extends SuperType {
 		
 		return ret;
 	}
+	
+	
+	public static String mask(String str,List<String> params){
+		int[] pos = new int[params.size()];
+		for(int i=0;i<params.size();i++){
+			pos[i]=Integer.parseInt(params.get(i));
+		}
+		return StringTools.replace(str, '*', pos);
+	}
+	
+//	public static String replace(String str,List<String> params){
+//		//TODO
+//	}
+
 
 	@Override
-	public MappingRule getRule() {
-		return rule;
-	}
-
-	public static String standardize(String in,List<String> params){
-		int input = Integer.parseInt(in);
-		float mean = Float.parseFloat(params.get(0));
-		float var = Float.parseFloat( params.get(1) );
-		return (int)(Function.standardize(mean, var, input));
+	public String getTypeName() {
+		return SupportedType.STRING;
 	}
 }

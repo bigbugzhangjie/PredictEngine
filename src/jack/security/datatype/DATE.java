@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DATE extends SuperType {
+	
 	String format="";
 	public DATE(String format){
 		this.format = format;
@@ -19,12 +20,14 @@ public class DATE extends SuperType {
 	 * @return
 	 */
 	ArrayList<String> obfuscate(String in,String func,List<String> params) {
-		return null;
-	} 
-	@Override
-	public MappingRule getRule() {
-		// TODO Auto-generated method stub
+	//TODO
 		return null;
 	}
+
+	@Override
+	public String getTypeName() {
+		return SupportedType.DATE;
+	} 
+
 
 }

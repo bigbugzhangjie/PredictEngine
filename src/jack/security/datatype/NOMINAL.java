@@ -1,11 +1,11 @@
 package jack.security.datatype;
 
-import jack.security.MappingRule;
-
 import java.util.ArrayList;
+import java.util.List;
 
 public class NOMINAL extends SuperType{
-
+	public static final String EXTEND="EXTD";
+	
 	ArrayList<String> list = new ArrayList<String>();//该枚举类型里支持的实例
 	int size;
 	
@@ -38,12 +38,11 @@ public class NOMINAL extends SuperType{
 		}
 	}
 	@Override
-	public ArrayList<String> obfuscate(String in) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getTypeName() {
+		return SupportedType.NOMINAL;
 	}
 	@Override
-	public MappingRule getRule() {
+	ArrayList<String> obfuscate(String in, String func, List<String> params) {
 		// TODO Auto-generated method stub
 		return null;
 	}

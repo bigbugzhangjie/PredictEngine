@@ -6,11 +6,11 @@ import jack.security.confuser.Function;
 import java.util.ArrayList;
 import java.util.List;
 
-public class INT extends SuperType {
+public class BOOLEAN extends SuperType {
 	public static final String STDIZE="STDIZE";
 
 	
-	public INT(String n,MappingRule rule){
+	public BOOLEAN(String n,MappingRule rule){
 		super(n);
 		this.rule = rule;
 	}
@@ -52,7 +52,7 @@ public class INT extends SuperType {
 
 	@Override
 	public String getTypeName() {
-		return SupportedType.INT;
+		return SupportedType.BOOLEAN;
 	}
 	
 	

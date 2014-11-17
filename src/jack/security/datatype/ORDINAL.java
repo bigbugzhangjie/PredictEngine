@@ -3,17 +3,17 @@ package jack.security.datatype;
 import jack.security.MappingRule;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ORDINAL extends SuperType{
 
 	@Override
-	public ArrayList<String> obfuscate(String in) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getTypeName() {
+		return SupportedType.ORDINAL;
 	}
 
 	@Override
-	public MappingRule getRule() {
+	ArrayList<String> obfuscate(String in, String func, List<String> params) {
 		// TODO Auto-generated method stub
 		return null;
 	}
