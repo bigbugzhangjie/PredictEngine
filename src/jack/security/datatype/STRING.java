@@ -6,19 +6,14 @@ import jack.security.confuser.Function;
 import java.util.ArrayList;
 import java.util.List;
 
-public class INT extends SuperType {
-	public static final String STDIZE="STDIZE";
-
+public class STRING extends SuperType {
+	public static final String MASK="MASK";
 	
-	public INT(String n,MappingRule rule){
+	public STRING(String n,MappingRule rule){
 		super(n);
 		this.rule = rule;
 	}
-	
-	@Override
-	public ArrayList<String> obfuscate(String in){
-		return obfuscate(in,rule.getFuncname(),rule.getParams());
-	}
+
 	/**
 	 * 对输入数据进行加密
 	 * @param in	输入数据
@@ -26,12 +21,12 @@ public class INT extends SuperType {
 	 * @param params	加密函数所需参数
 	 * @return
 	 */
-	public ArrayList<String> obfuscate(String in,String func,List<String> params) {
+	ArrayList<String> obfuscate(String in,String func,List<String> params) {
 		ArrayList<String> ret = new ArrayList<String>();
 		
 		String out = "";
 		switch(func){
-		case STDIZE:
+		case MASK:
 			out = String.valueOf(standardize(in,params));
 			break;
 //		case xxxxx:
@@ -49,7 +44,7 @@ public class INT extends SuperType {
 		return rule;
 	}
 
-	public static int standardize(String in,List<String> params){
+	public static String standardize(String in,List<String> params){
 		int input = Integer.parseInt(in);
 		float mean = Float.parseFloat(params.get(0));
 		float var = Float.parseFloat( params.get(1) );

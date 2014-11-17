@@ -1,5 +1,9 @@
 package jack.ml.data;
-
+/**
+ * 一条数据，包含原始文本和对应的FeatureVector
+ * @author bigbug
+ *
+ */
 public class Data {
 	int id;
 	String name;

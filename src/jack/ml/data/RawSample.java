@@ -3,15 +3,20 @@ package jack.ml.data;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 一条原始样本，所有信息用String表示
+ * @author bigbug
+ *
+ */
 public class RawSample {
-	//按顺序声明原始样本中每个feature的数据类型
+	
+	//按顺序声明原始样本中每个feature的数据类型的字符串名
 	ArrayList<String> types = new ArrayList<String>();
 	//以String类型存储原始信息
 	ArrayList<String> values = new ArrayList<String>();
 	
-	public RawSample(){
-		
-	}
+	public RawSample(){	}
+
 	
 	public void addType(String t){
 		types.add(t);

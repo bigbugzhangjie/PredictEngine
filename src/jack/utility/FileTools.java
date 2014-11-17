@@ -265,9 +265,9 @@ public class FileTools extends FileUtils {
 	public static void copy(File source,File target){
 		
 	}
-	public static void move(File source,File target){
-		
-	}
+//	public static void move(File source,File target){
+//		
+//	}
 	/**
 	 * 
 	 * @param lines	

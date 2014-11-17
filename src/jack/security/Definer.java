@@ -18,11 +18,27 @@ import java.util.List;
  */
 public class Definer {
 	String casename;
-	List<SuperType> type = new ArrayList<SuperType>();
+	List<SuperType> typelist = new ArrayList<SuperType>();
 	
 	public Definer(){
 		
 	}
+	public void setName(String name){
+		this.casename = name;
+	}
+	public void loadTypeList(File f) throws IOException, FileFormatException{
+		this.typelist = loadTypeDefinition(f);
+	}
+	public void setTypeList(List<SuperType> type) {
+		this.typelist = type;
+	}
+	public int getSize(){
+		return typelist.size();
+	}
+	public SuperType getType(int idx){
+		return typelist.get(idx);
+	}
+	
 	/**
 	 * 从文件中读取数据类型的定义，定义文件中行的顺序要与数据文件中列的顺序一致
 	 * column_name \t type_name \t aaa \t bbb \tccc

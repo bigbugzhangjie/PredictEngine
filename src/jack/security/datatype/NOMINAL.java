@@ -38,7 +38,7 @@ public class NOMINAL extends SuperType{
 		}
 	}
 	@Override
-	public ArrayList<String> confuse(String in) {
+	public ArrayList<String> obfuscate(String in) {
 		// TODO Auto-generated method stub
 		return null;
 	}

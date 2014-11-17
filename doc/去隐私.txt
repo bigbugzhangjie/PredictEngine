@@ -19,3 +19,20 @@ Function:包含一些static的常用的映射函数；
 	function name: 每个data type可能对应多个转换用的映射函数
 	params：function 所要用到的参数
 	
+	
+	
+
+例：
+﻿a)         姓名
+b)         身份证号
+c)         手机号码
+d)         住址
+e)         邮箱号码
+f)          性别
+g)         年龄
+h)         新车购置价
+i)           初次登记日期
+j)           投保年限
+k)         年均理赔次数
+l)           销售渠道
+m)       车牌号码
