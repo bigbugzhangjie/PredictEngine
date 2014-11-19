@@ -1,13 +1,14 @@
 package jack.security.datatype;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import jack.security.Case;
+import jack.exception.UndefinedException;
 import jack.security.MappingRule;
 import jack.security.confuser.Obfuscater;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class SuperType implements Obfuscater{
+	public static final String DEL="DEL";
 	String columnName; //
 //	Customer customer;
 	
@@ -30,7 +31,7 @@ public abstract class SuperType implements Obfuscater{
 	}
 
 	@Override
-	public ArrayList<String> obfuscate(String in){
+	public ArrayList<String> obfuscate(String in) throws UndefinedException{
 		return obfuscate(in,rule.getFuncname(),rule.getParams());
 	}
 	
@@ -41,8 +42,18 @@ public abstract class SuperType implements Obfuscater{
 	 * @param params	加密函数所需参数
 	 * @return
 	 */
-	abstract ArrayList<String> obfuscate(String in,String func,List<String> params);
+	abstract ArrayList<String> obfuscate(String in,String func,List<String> params) throws UndefinedException;
 	 
+	/**
+	 * 返回“”
+	 * @param in
+	 * @param params
+	 * @return
+	 */
+	public static String delete(String in,List<String> params){
+		return "";
+	}
+	
 	@Override
 	public MappingRule getRule() {
 		return rule;

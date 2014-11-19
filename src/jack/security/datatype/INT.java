@@ -1,5 +1,6 @@
 package jack.security.datatype;
 
+import jack.exception.UndefinedFunction;
 import jack.security.MappingRule;
 import jack.security.confuser.Function;
 
@@ -22,8 +23,9 @@ public class INT extends SuperType {
 	 * @param func	加密函数标识
 	 * @param params	加密函数所需参数
 	 * @return
+	 * @throws UndefinedFunction 
 	 */
-	public ArrayList<String> obfuscate(String in,String func,List<String> params) {
+	public ArrayList<String> obfuscate(String in,String func,List<String> params) throws UndefinedFunction {
 		ArrayList<String> ret = new ArrayList<String>();
 		
 		String out = "";
@@ -31,7 +33,11 @@ public class INT extends SuperType {
 		case STDIZE:
 			out = String.valueOf(standardize(in,params));
 			break;
-//		case xxxxx:
+		case DEL:
+			out = delete(in,params);
+			break;
+		default:
+			throw new UndefinedFunction();
 		}
 		ret.add(out);
 		

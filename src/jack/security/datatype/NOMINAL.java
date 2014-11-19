@@ -1,12 +1,15 @@
 package jack.security.datatype;
 
+import jack.exception.UndefinedFunction;
+import jack.exception.UndefinedNOMINAL;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class NOMINAL extends SuperType{
 	public static final String EXTEND="EXTD";
 	
-	ArrayList<String> list = new ArrayList<String>();//该枚举类型里支持的实例
+	ArrayList<String> candidates = new ArrayList<String>();//该枚举类型里支持的实例
 	int size;
 	
 	public NOMINAL(String col){
@@ -14,25 +17,25 @@ public class NOMINAL extends SuperType{
 	}
 	public NOMINAL(String col,ArrayList<String> list){
 		super(col);
-		this.list = list;
+		this.candidates = list;
 	}
 	
 //	public void add(String t){		
 //	}
 	
-	public void setList(ArrayList<String> list) {
-		this.list = list;
+	public void setCandidates(ArrayList<String> list) {
+		this.candidates = list;
 	}
 	
 	public int getSize(){
-		size = list.size();
+		size = candidates.size();
 		return size;
 	}
 	
 	
 	public int getIndex(String s){
-		if(list.contains(s)){
-			return list.indexOf(s);
+		if(candidates.contains(s)){
+			return candidates.indexOf(s);
 		}else{
 			return -1;
 		}
@@ -42,10 +45,44 @@ public class NOMINAL extends SuperType{
 		return SupportedType.NOMINAL;
 	}
 	@Override
-	ArrayList<String> obfuscate(String in, String func, List<String> params) {
+	ArrayList<String> obfuscate(String in, String func, List<String> params) throws UndefinedNOMINAL, UndefinedFunction  {
 		// TODO Auto-generated method stub
-		return null;
+		ArrayList<String> ret = new ArrayList<String>();
+		
+		String out = "";
+		switch(func){
+		case EXTEND:
+			out = extend(in,params);
+			break;
+		case DEL:
+			out = delete(in,params);
+			break;
+		default:
+			throw new UndefinedFunction();
+		}
+		ret.add(out);
+		
+		//add others
+//		ret.add(yyy);
+		
+		return ret;
 	}
 	
-
+	/**
+	 * 在candidates列表中的第pos[i]列之前加干扰项；
+	 * 如：  原candidates为 [3,6,1,9,8,2],   pos=[2,4]
+	 * 则输出为： [3,6,x,1,9,x,8,2]
+	 * @param in
+	 * @param pos	candidates中的目标列的index	
+	 * @return
+	 * @throws UndefinedNOMINAL 
+	 */
+	private String extend(String in, List<String> pos) throws UndefinedNOMINAL{
+		String ret = "";
+		if(!candidates.contains(in)){
+			throw new UndefinedNOMINAL();
+		}
+		//TODO
+		return ret;
+	}
 }

@@ -1,5 +1,6 @@
 package jack.security.datatype;
 
+import jack.exception.UndefinedFunction;
 import jack.security.MappingRule;
 
 import java.util.ArrayList;
@@ -18,10 +19,26 @@ public class DATE extends SuperType {
 	 * @param func	加密函数标识
 	 * @param params	加密函数所需参数
 	 * @return
+	 * @throws UndefinedFunction 
 	 */
-	ArrayList<String> obfuscate(String in,String func,List<String> params) {
-	//TODO
-		return null;
+	public ArrayList<String> obfuscate(String in,String func,List<String> params) throws UndefinedFunction {
+		ArrayList<String> ret = new ArrayList<String>();
+		
+		String out = "";
+		switch(func){
+//TODO
+		case DEL:
+			out = delete(in,params);
+			break;
+		default:
+			throw new UndefinedFunction();
+		}
+		ret.add(out);
+		//TODO		
+		//add others
+//		ret.add(yyy);
+		
+		return ret;
 	}
 
 	@Override

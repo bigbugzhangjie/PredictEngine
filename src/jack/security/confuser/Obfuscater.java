@@ -1,5 +1,6 @@
 package jack.security.confuser;
 
+import jack.exception.UndefinedException;
 import jack.security.MappingRule;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ public interface Obfuscater {
 	 * 
 	 * @return
 	 */
-	public ArrayList<String> obfuscate(String in);
+	public ArrayList<String> obfuscate(String in) throws UndefinedException;
 	public MappingRule getRule();
 	public void setRule(MappingRule rule);
 }

@@ -40,7 +40,8 @@ public class Definer {
 	}
 	
 	/**
-	 * 从文件中读取数据类型的定义，定义文件中行的顺序要与数据文件中列的顺序一致
+	 * 从文件中读取数据类型的定义，定义文件中行的顺序要与数据文件中列的顺序一致；
+	 * 已#开头的行认为是注释，跳过；
 	 * column_name \t type_name \t aaa \t bbb \tccc
 	 * @param file
 	 * @throws IOException 
@@ -50,6 +51,9 @@ public class Definer {
 		List<String> lines = FileTools.getLineList(file);
 		List<SuperType> ret = new ArrayList<SuperType>();
 		for(String line : lines){
+			if(line.startsWith("#")){
+				continue;
+			}
 			SuperType type = null;
 			String[] cols = line.split("\t");
 			if(cols.length>=2){

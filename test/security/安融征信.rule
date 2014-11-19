@@ -1,0 +1,15 @@
+# 【姓名】字段隐去名，数据格式为“姓*”或“姓**”；
+name	MASK	2	3	4	5	6
+#【身份证号码】字段隐去第2、10、12和最后1位，数据格式为：“1*0101198*0*21321*”。
+ID	MASK	1	9	11	17
+cell	DEL
+address	DEL
+email	DEL
+sex	DEL
+age	DEL
+price	DEL
+registDay	DEL
+duration	DEL
+payNum	DEL
+channel	DEL
+carNum	DEL

@@ -7,7 +7,7 @@ sex	EXTD	F	M
 age	INT
 price	INT
 registDay	DATE
-duration	INT
+duration	FLOAT
 payNum	INT
 channel	INT
 carNum	STRING
