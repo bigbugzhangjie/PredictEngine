@@ -1,7 +1,7 @@
 package jack.security.datatype;
 
-import jack.exception.UndefinedFunction;
-import jack.exception.UndefinedNOMINAL;
+import jack.security.exception.UndefinedFunction;
+import jack.security.exception.UndefinedNOMINAL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,12 @@ public class NOMINAL extends SuperType{
 	public NOMINAL(String col){
 		super(col);
 	}
+	
+	/**
+	 * 
+	 * @param col	该列的字段名
+	 * @param list	此NOMINAL可选的所有枚举值
+	 */
 	public NOMINAL(String col,ArrayList<String> list){
 		super(col);
 		this.candidates = list;

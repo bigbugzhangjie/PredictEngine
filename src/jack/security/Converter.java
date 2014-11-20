@@ -4,6 +4,7 @@ import jack.exception.FileFormatException;
 import jack.exception.UndefinedException;
 import jack.ml.data.RawCorpus;
 import jack.security.datatype.SuperType;
+import jack.security.exception.UndefinedType;
 import jack.utility.FileTools;
 
 import java.io.File;
@@ -44,25 +45,31 @@ public class Converter {
 		this.rules = ret;
 	}
 	
-	public void loadDefiner(File file) throws IOException, FileFormatException{
+	public void loadDefiner(File file) throws IOException, FileFormatException, UndefinedType{
 		Definer def = new Definer();
 		def.setName(casename);
 		def.loadTypeList(file);
 		this.definer = def;
 	}
 	
+	/**
+	 * 对corpus进行加密
+	 * @param corpus
+	 * @throws UndefinedException
+	 */
 	public void obfuscate(RawCorpus corpus) throws UndefinedException{
+		ArrayList<ArrayList<String>> ret = new ArrayList<ArrayList<String>>();
 		System.out.println("obfuscating corpus ...");
 		if(corpus==null || corpus.getData()==null || corpus.getSize()==0){
 			System.err.println("non-input corpus...");
-			return;
+			return ;
 		}
 
-		result = new ArrayList<ArrayList<String>>();
+		ret = new ArrayList<ArrayList<String>>();
 		int error_line = 0;
 		
 		for(ArrayList<String> line : corpus.getData()){
-			if(line.size()!= rules.size()){
+			if(line.size()!= rules.size()){ //字段数目不对
 				error_line++;
 				System.err.println("size mismatch error in line: "+line);
 				continue;
@@ -72,12 +79,21 @@ public class Converter {
 				String col = line.get(i);
 				MappingRule rule = rules.get(i);
 				SuperType type = definer.getType(i);
-				type.setRule(rule);				
-				out.addAll( type.obfuscate(col) );				
+				type.setRule(rule);		
+				
+				//加密函数名为空时，不加密
+				if(rule.getFuncname()==null || rule.getFuncname().length()==0){
+					ArrayList<String> orig = new ArrayList<String>();
+					orig.add(col);
+					out.addAll(orig);
+				}else{
+					out.addAll( type.obfuscate(col) );
+				}
 			}
-			result.add(out);
+			ret.add(out);
 		}
 		System.out.println("Found "+error_line+" error lines");
+		result = ret;
 	}
 	
 	public void write(File file) throws IOException{

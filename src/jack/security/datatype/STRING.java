@@ -1,8 +1,8 @@
 package jack.security.datatype;
 
-import jack.exception.UndefinedFunction;
 import jack.security.MappingRule;
 import jack.security.confuser.Function;
+import jack.security.exception.UndefinedFunction;
 import jack.utility.StringTools;
 
 import java.util.ArrayList;
@@ -12,8 +12,11 @@ public class STRING extends SuperType {
 	public static final String MASK="MASK";
 //	public static final String REPLACE="REPL";
 	
-	public STRING(String n,MappingRule rule){
-		super(n);
+	public STRING(String columnName){
+		super(columnName);
+	}
+	public STRING(String columnName,MappingRule rule){
+		super(columnName);
 		this.rule = rule;
 	}
 
@@ -37,7 +40,7 @@ public class STRING extends SuperType {
 			out = delete(in,params);
 			break;
 //		case xxxxx:
-		default:
+		default: // 不加密
 			throw new UndefinedFunction();
 		}
 		ret.add(out);

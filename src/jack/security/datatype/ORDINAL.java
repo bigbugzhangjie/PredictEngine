@@ -1,13 +1,26 @@
 package jack.security.datatype;
 
-import jack.exception.UndefinedFunction;
 import jack.security.MappingRule;
+import jack.security.exception.UndefinedFunction;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ORDINAL extends SuperType{
+public class ORDINAL extends NOMINAL{
 
+	public ORDINAL(String columnName){
+		super(columnName);
+	}
+	/**
+	 * 
+	 * @param col	该列的字段名
+	 * @param list	此ORDINAL可选的所有值,要求从小到大排列
+	 */
+	public ORDINAL(String col,ArrayList<String> list){
+		super(col);
+		this.candidates = list;
+	}
+	
 	@Override
 	public String getTypeName() {
 		return SupportedType.ORDINAL;

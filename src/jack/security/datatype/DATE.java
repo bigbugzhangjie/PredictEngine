@@ -1,7 +1,7 @@
 package jack.security.datatype;
 
-import jack.exception.UndefinedFunction;
 import jack.security.MappingRule;
+import jack.security.exception.UndefinedFunction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,15 @@ import java.util.List;
 public class DATE extends SuperType {
 	
 	String format="";
-	public DATE(String format){
+	public DATE(String colname){
+		super(colname);
+	}
+	public DATE(String colname,String format){
+		super(colname);
+		this.format = format;
+	}
+
+	public void setFormat(String format) {
 		this.format = format;
 	}
 	

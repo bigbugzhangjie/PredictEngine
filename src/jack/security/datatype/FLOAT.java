@@ -1,8 +1,8 @@
 package jack.security.datatype;
 
-import jack.exception.UndefinedFunction;
 import jack.security.MappingRule;
 import jack.security.confuser.Function;
+import jack.security.exception.UndefinedFunction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +10,11 @@ import java.util.List;
 public class FLOAT extends SuperType {
 	public static final String STDIZE="STDIZE";
 
-	
-	public FLOAT(String n,MappingRule rule){
-		super(n);
+	public FLOAT(String colname){
+		super(colname);
+	}
+	public FLOAT(String colname,MappingRule rule){
+		super(colname);
 		this.rule = rule;
 	}
 	
