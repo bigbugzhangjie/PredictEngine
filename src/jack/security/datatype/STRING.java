@@ -11,6 +11,7 @@ import java.util.List;
 public class STRING extends SuperType {
 	public static final String MASK="MASK";
 //	public static final String REPLACE="REPL";
+	public static final String TRIM="TRIM";
 	
 	public STRING(String columnName){
 		super(columnName);
@@ -39,7 +40,9 @@ public class STRING extends SuperType {
 		case DEL:
 			out = delete(in,params);
 			break;
-//		case xxxxx:
+		case TRIM:
+			out = trim(in,params);
+			break;
 		default: // 不加密
 			throw new UndefinedFunction();
 		}
@@ -58,6 +61,18 @@ public class STRING extends SuperType {
 			pos[i]=Integer.parseInt(params.get(i));
 		}
 		return StringTools.replace(str, '*', pos);
+	}
+	public static String trim(String str,List<String> params){
+		if(params==null || params.size()==0){
+			return str;
+		}
+		String s = params.get(0);
+		if(str.contains(s)){
+			int idx = str.indexOf(s);
+			return str.substring(0, idx);
+		}else{
+			return str;
+		}
 	}
 	
 //	public static String replace(String str,List<String> params){

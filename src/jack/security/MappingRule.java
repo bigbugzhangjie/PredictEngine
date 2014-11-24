@@ -8,7 +8,7 @@ import java.util.List;
 public class MappingRule {
 	String rulename; //例：age
 	String datatypename;//所对应的数据类型的name,例：SupportedType.INT
-	String funcname; // 具体使用的映射函数name，例： INT.STDIZE
+	String funcname=""; // 具体使用的映射函数name，例： INT.STDIZE
 	List<String> params;//映射函数需要的参数, 例： ["45","15"]
 	
 	public MappingRule(){
@@ -17,30 +17,34 @@ public class MappingRule {
 	
 	/**
 	 * 从string中读取MappingRule。str已#开头则为注释，返回null
-	 * @param str	第一列为name，第二列为所对应的数据类型的name，第三列为具体使用的映射函数name，其他列为映射函数需要的参数；各列用tab分割
+	 * @param str	第一列为name，第二列为具体使用的映射函数name，其他列为映射函数需要的参数；各列用tab分割
 	 * @return
 	 */
-	public static MappingRule load(String str) throws FileFormatException{
-		if(str.startsWith("#")){
-			return null;
+	public static MappingRule load(String str) throws FileFormatException {
+		MappingRule ret = null;
+		if (str.startsWith("#")) {
+			return ret;
 		}
+
 		String[] cols = str.split("\t");
-		if(cols.length>0){
-			MappingRule ret = new MappingRule();
-			ret.setRulename(cols[0]);
-			if(cols.length>=2){
+		if (cols.length <= 0) {
+			return ret;
+		}
+
+		ret = new MappingRule();
+		ret.setRulename(cols[0]);
+
+		if (cols.length >= 2) {
+			ret.setFuncname(cols[1]);
+			if (cols.length > 2) {
 				ArrayList<String> ps = new ArrayList<String>();
-				for(int i=1;i<cols.length;i++){
+				for (int i = 2; i < cols.length; i++) {
 					ps.add(cols[i]);
 				}
 				ret.setParams(ps);
-				return ret;
-			}else{
-				throw new FileFormatException();
 			}
-		}else{
-			return null;
 		}
+		return ret;
 	}
 
 

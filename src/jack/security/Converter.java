@@ -68,15 +68,15 @@ public class Converter {
 		ret = new ArrayList<ArrayList<String>>();
 		int error_line = 0;
 		
-		for(ArrayList<String> line : corpus.getData()){
-			if(line.size()!= rules.size()){ //字段数目不对
+		for(ArrayList<String> sample : corpus.getData()){ //取出数据集中的每条样本
+			if(sample.size()!= rules.size()){ //字段数目不对
 				error_line++;
-				System.err.println("size mismatch error in line: "+line);
+				System.err.println("size mismatch error in line: "+sample);
 				continue;
 			}
 			ArrayList<String> out = new ArrayList<String>();
-			for(int i=0; i<line.size();i++){
-				String col = line.get(i);
+			for(int i=0; i<sample.size();i++){	// 处理样本中的每个字段
+				String col = sample.get(i);
 				MappingRule rule = rules.get(i);
 				SuperType type = definer.getType(i);
 				type.setRule(rule);		
@@ -109,15 +109,19 @@ public class Converter {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		String casename = "test";
-		String depart = "test-dept";
-		String party = "test-3rdParty";
+		String casename = "1124";
+		String depart = "雪域之光";
+		String party = "雪域之光";		//"安融"	"百分点"
 		
-		File datafile = new File("test/security/车险test.data");//文本文件
-		File deffile = new File("test/security/车险test.def");//各列的数据类型定义
-		File rulefile = new File("test/security/安融征信.rule");//各列的转换规则定义
+//		File datafile = new File("test/security/车险test.data");//文本文件
+//		File deffile = new File("test/security/车险test.def");//各列的数据类型定义
+//		File rulefile = new File("test/security/安融征信.rule");//各列的转换规则定义
+	
+		File datafile = new File("test/security/车险-10000.data");//文本文件
+		File deffile = new File("test/security/车险-10000.def");//各列的数据类型定义
+		File rulefile = new File("test/security/雪域之光.rule");//安融征信 百分点
 		
-		File outfile = new File("test/security/安融征信.out"); //转换后的结果文件
+		File outfile = new File("test/security/"+casename+"-"+depart+"-"+party+".out"); //转换后的结果文件
 		
 		Case mycase = new Case(casename,depart,party);
 		mycase.fetch(datafile);
