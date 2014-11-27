@@ -11,12 +11,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Converter {
 
 	String casename = "";
-	ArrayList<MappingRule> rules = new ArrayList<MappingRule>();
+	HashMap<String,MappingRule> rules = new HashMap<String,MappingRule>();
 	Definer definer;
 	
 	ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>(); 
@@ -34,13 +35,13 @@ public class Converter {
 	 */
 	public void loadRules(File file) throws IOException, FileFormatException{
 		List<String> lines = FileTools.getLineList(file);
-		ArrayList<MappingRule> ret = new ArrayList<MappingRule>();
+		HashMap<String,MappingRule> ret = new HashMap<String,MappingRule>();
 		for(String line : lines){
 			if(line.startsWith("#")){
 				continue;
 			}
 			MappingRule rule = MappingRule.load(line);
-			ret.add(rule);
+			ret.put(rule.getRulename(),rule);
 		}		
 		this.rules = ret;
 	}
@@ -69,16 +70,18 @@ public class Converter {
 		int error_line = 0;
 		
 		for(ArrayList<String> sample : corpus.getData()){ //取出数据集中的每条样本
-			if(sample.size()!= rules.size()){ //字段数目不对
-				error_line++;
-				System.err.println("size mismatch error in line: "+sample);
-				continue;
-			}
+//			if(sample.size()!= rules.size()){ //字段数目不对
+//				error_line++;
+//				System.err.println("size mismatch error in line: "+sample);
+//				continue;
+//			}
 			ArrayList<String> out = new ArrayList<String>();
 			for(int i=0; i<sample.size();i++){	// 处理样本中的每个字段
 				String col = sample.get(i);
-				MappingRule rule = rules.get(i);
+				
 				SuperType type = definer.getType(i);
+				String colname = type.getColumnName();
+				MappingRule rule = rules.get(colname);
 				type.setRule(rule);		
 				
 				//加密函数名为空时，不加密
@@ -109,17 +112,17 @@ public class Converter {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		String casename = "1124";
+		String casename = "1127";
 		String depart = "雪域之光";
-		String party = "雪域之光";		//"安融"	"百分点"
+		String party = "安融征信";		//"安融征信"  	"百分点"   "雪域之光"
 		
 //		File datafile = new File("test/security/车险test.data");//文本文件
 //		File deffile = new File("test/security/车险test.def");//各列的数据类型定义
 //		File rulefile = new File("test/security/安融征信.rule");//各列的转换规则定义
 	
-		File datafile = new File("test/security/车险-10000.data");//文本文件
-		File deffile = new File("test/security/车险-10000.def");//各列的数据类型定义
-		File rulefile = new File("test/security/雪域之光.rule");//安融征信 百分点
+		File datafile = new File("test/security/车险19k-v2.data");//车险19k-v2.data   车险-10000.data
+		File deffile = new File("test/security/车险19k-v2.def");//车险-10000.def
+		File rulefile = new File("test/security/"+party+"-v2.rule");//安融征信 百分点
 		
 		File outfile = new File("test/security/"+casename+"-"+depart+"-"+party+".out"); //转换后的结果文件
 		

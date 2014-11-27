@@ -30,16 +30,23 @@ public class RawCorpus {
 	
 	/**
 	 * 从文件中读取每行，每行中用 \t 分割，读取各个字段并以String存储
+	 * 注意：跳过以“#”开头的行，认为是注释
 	 * @param f
 	 * @throws IOException
 	 */	
 	public void load(File f) throws IOException{
 		List<String> lines = FileTools.getLineList(f);
+		int cnt = 0;
 		for(String line : lines){
+			if(line.startsWith("#")){
+				continue;
+			}
 			String[] ts = line.split("\t");
 			ArrayList<String> cols = new ArrayList<String>(Arrays.asList(ts));
 			data.add(cols);
+			cnt++;
 		}
+		System.out.println("Loaded "+cnt +" valid lines from file:"+f.getName());
 	}
 	
 	public String getName() {
