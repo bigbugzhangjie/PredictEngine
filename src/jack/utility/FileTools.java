@@ -289,11 +289,79 @@ public class FileTools extends FileUtils {
 	public static void cat(List<File> files, File target){
 		merge(files, target);
 	}
-	public List<File> filter(File dir, List<String> kws){
-		return null;
+	/**
+	 * 递归形式遍历目录，返回目录及子目录下所有文件
+	 * @param dir
+	 * @return
+	 */
+	public static List<File> getAllFiles(File dir){
+		List<File> ret = new ArrayList<File>();
+        File[] fs = dir.listFiles();
+	 
+	        if (fs == null) {
+	            return ret;
+	        }
+	 
+	        for (File file : fs) {
+	            if (file.isFile()) {
+	                ret.add(file);
+	            } else {
+	                ret.addAll(getAllFiles(file));
+	            }
+	        }
+		return ret;
+	}
+	
+	/**
+	 * 按照关键字kw，过滤目录dir下的文件
+	 * @param dir	目标目录
+	 * @param kw	关键词
+	 * @param type	0:文件名中任何位置包含kw;  1:以kw开头;  2:以kw结尾;  3:以kw开头或结尾; 
+	 * @param recursive	 是否递归处理子目录
+	 * @return
+	 */
+	public static List<File> filter(File dir, String kw, int type,boolean recursive) {
+		List<File> ret  = new ArrayList<File>();
+		List<File> fs = null;
+		if (recursive){
+			fs = getAllFiles(dir);
+		}else{
+			fs = new ArrayList<File>();
+			for(File f : dir.listFiles()){
+				fs.add(f);
+			}
+		}
+
+		for (File f : fs) {
+			String name = f.getName();
+			switch (type) { // 1:以kw开头；2:以kw结尾；3:以kw开头或结尾; 4:包含kw
+			case 1:
+				if (name.startsWith(kw)) {
+					ret.add(f);
+				}
+				break;
+			case 2:
+				if (name.endsWith(kw)) {
+					ret.add(f);
+				}
+				break;
+			case 3:
+				if (name.startsWith(kw) || name.endsWith(kw)) {
+					ret.add(f);
+				}
+				break;
+			case 0:
+				if (name.contains(kw)) {
+					ret.add(f);
+				}
+				break;
+			}
+		}
+		System.out.println("Got "+ret.size()+" files from "+dir.getName());
+		return ret;
 	}
 	/**
-	 * 
+	 * 按照关键字kw，过滤目录dir下的文件
 	 * @param dir
 	 * @param kws
 	 * @param type	0:文件名中任何位置包含kw;  1:以kw开头;  2:以kw结尾;  3:以kw开头或结尾; 
