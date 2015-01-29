@@ -117,6 +117,50 @@ public class FileTools extends FileUtils {
 	}
 	
 	/**
+	 * 从文件中选取指定的某一列，存入List中。
+	 * @param file
+	 * @param index	以某列作为key（从0开始计数）
+	 * @param sep	列分隔符
+	 * @return
+	 */
+	public static HashMap<String,String> getLineMap(File file, int index, String sep) {
+		HashMap<String,String> ret = new HashMap<String,String>();
+		BufferedReader br = null;
+		int lineCounter = 0;
+		System.out.println("Reading file: "+ file.getName());
+		try {
+			// 构造BufferedReader对象
+			br = new BufferedReader(new FileReader(file));
+
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				lineCounter++;
+				String[] cols = line.split(sep);
+				if(cols.length>=(index+1)){
+					String col = cols[index];
+					ret.put(col,line);
+				}else{
+//					 //将出错line文本打印到控制台
+					System.err.println("index overflow error: "+line);
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			// 关闭BufferedReader
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		System.out.println("Read "+ lineCounter+" lines and got "+ret.size()+" valid lines.");
+		return ret;
+	}
+		
+	/**
 	 * 获取file中的某一列
 	 * @param file
 	 * @param index	列号，从0开始计数
@@ -173,7 +217,8 @@ public class FileTools extends FileUtils {
 		}
 		return ret;
 	}
-	
+
+
 	/**
 	 * 从file中的每行抽取指定的多列
 	 * @param file	目标文件
@@ -282,13 +327,60 @@ public class FileTools extends FileUtils {
 		}
 		w.close();		
 	}
-//	public void mergeFilesBy......
-	public static void merge(List<File> files,File target){
+	
+	/**
+	 * 以文件中的某一列作为key，整个一行的String作为value，读取多个文件。按照key去匹配多个文件，匹配后合并。
+	 * @param files	 待合并的文件列表
+	 * @param indicesOfKey	key在各个文件中所在列的index（从0计数）
+	 * @param out	合并后的文件
+	 */
+	public void mergeFilesByColumn(List<File> files, List<Integer> indicesOfKey,File out){
+		//TODO
+	}
+	
+	/**
+	 * 指定某列为key，按照key扩展source文件，
+	 * @param sep	文件中各列的分割符
+	 * @param source	待扩展的源文件
+	 * @param indexOfSource	source文件中key列的index
+	 * @param extend	需要扩展的内容
+	 * @param indexOfExtend	 extend中key列的index
+	 * @param out	输出文件
+	 * @param remain	source中的某行在extend中没有找到key时的处理办法，true:保留该行，false:删除该行
+	 * @throws IOException 
+	 */
+	public static void extendFile(String sep,File source,int indexOfSource, File extend, int indexOfExtend, File out,boolean remain) throws IOException{
+		HashMap<String,String> sm = FileTools.getLineMap(source, indexOfSource, sep);
+		HashMap<String,String> em = FileTools.getLineMap(extend, indexOfExtend, sep);
+//		System.out.println("Read "+sm.size()+" lines from file: "+source.getName());
+//		System.out.println("Read "+em.size()+" lines from file: "+extend.getName());
 		
+		int match = 0;
+		int lc = 0;
+		FileWriter writer = new FileWriter(out);
+		for(String k : sm.keySet()){
+			String line = sm.get(k);
+			if(em.keySet().contains(k)){				
+				line += sep+em.get(k);
+				writer.write(line+"\n");
+				match++;
+				lc++;
+			}else if(remain){
+				writer.write(line+"\n");
+				lc++;
+			}
+		}
+		System.out.println("Matched "+match+" lines and wrote "+lc+" lines to file: "+out.getName());
+		writer.close();
 	}
-	public static void cat(List<File> files, File target){
-		merge(files, target);
-	}
+	
+//	public static void merge(List<File> files,File target){
+//		
+//	}
+//	public static void cat(List<File> files, File target){
+//		merge(files, target);
+//	}
+	
 	/**
 	 * 递归形式遍历目录，返回目录及子目录下所有文件
 	 * @param dir
@@ -473,9 +565,41 @@ public class FileTools extends FileUtils {
 //		}
 		
 		
-		File in = new File("/home/bigbug/adt-workspace/data/zhangyun/test400");
-		File out = new File("/home/bigbug/adt-workspace/data/zhangyun/test400-2");
-		shuffle(in,out);
+//		File in = new File("/home/bigbug/adt-workspace/data/zhangyun/test400");
+//		File out = new File("/home/bigbug/adt-workspace/data/zhangyun/test400-2");
+//		shuffle(in,out);
+		
+		
+//		//unitest:  getMultiColumn()
+//		File in = new File("/home/bigbug/data/cell.txt");
+//		ArrayList<Integer> list = new ArrayList<Integer>();
+//		list.add(1);list.add(2);
+//		HashMap<Integer,ArrayList<String>> ret = getMultiColumn(in,list,"\t",true);
+//		FileWriter w = new FileWriter(new File("/home/bigbug/data/cell-p1.txt"));
+//		for(int i : ret.keySet()){
+//			ArrayList<String> cols = ret.get(i);
+//			for(String c : cols){
+//				w.write(c+"\t");
+//			}
+//			w.write("\n");
+//		}
+//		w.close();
+		
+		
+////		//unitest: extendFile()
+//		File source = new File("/home/bigbug/data/all.txt");
+//		File extend = new File("/home/bigbug/data/cell.txt");
+//		File out = new File("/home/bigbug/data/all+cell.txt");
+//		FileTools.extendFile("\t", source, 0, extend, 0, out, true);
+		
+		File in = new File("/home/bigbug/data/cell-p2.txt");
+		Set<String> list = FileTools.getLineSet(in);
+		File out = new File("/home/bigbug/data/cell-p2-v2.txt");
+		FileWriter w = new FileWriter(out);
+		for(String line : list){
+			w.write(line+"\n");
+		}
+		w.close();
 		
 		
 		System.out.println("Finished!");
