@@ -8,16 +8,11 @@ import java.util.Set;
 
 public class QQEmailGetter {
 
-	public static void main(String[] args) throws Exception {
-//		// new_csrdb    huishou  买来的email数据
-//		File emailfile = new File("/home/bigbug/data/8.8M-emails/snemail-distinct-8.8M.txt");
-		
-		// CIF库里的客户邮箱
-		File emailfile = new File("/bigdata/corpus/cif/cif_email.txt");
-		Set<String> lines = FileTools.getLineSet(emailfile);
-		FileWriter w = new FileWriter(new File("/home/bigbug/data/8.8M-emails/cif-qq.txt"));
+	public static void extract(File in,File out) throws Exception {
+		Set<String> lines = FileTools.getLineSet(in);
+		FileWriter w = new FileWriter(out);
 	
-		System.out.println("Loaded "+lines.size() +" lines.");
+		System.out.println("Loaded "+lines.size() +" lines from "+in.getName());
 		int perc = Math.max(1, lines.size()/100);
 		int lc=0;
 		int prog=0;
@@ -58,4 +53,19 @@ public class QQEmailGetter {
 		System.out.println("Found "+c+" QQ.");
 	}
 
+	public static void main(String[] args) throws Exception {
+//		// new_csrdb    huishou  买来的email数据
+//		File emailfile = new File("/home/bigbug/data/8.8M-emails/snemail-distinct-8.8M.txt");
+//		File qqfile = new File("/home/bigbug/data/8.8M-emails/qq-HUISHOU.txt");
+		
+		// CIF库里的客户邮箱
+//		File emailfile = new File("/bigdata/corpus/cif/cif_email.txt");
+//		File qqfile = new File("/home/bigbug/data/8.8M-emails/cif-qq.txt");
+		
+		File emailfile = new File("/home/bigbug/data/官网注册用户/offical-utf8.txt");
+		File qqfile = new File("/home/bigbug/data/官网注册用户/offical-QQ.txt");
+		
+		extract(emailfile,qqfile);
+
+	}
 }
