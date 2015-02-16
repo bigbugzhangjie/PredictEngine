@@ -1,4 +1,4 @@
-package jack.security.exception;
+package jack.translator.exception;
 
 import jack.exception.UndefinedException;
 

@@ -1,4 +1,4 @@
-package test;
+package jack.example;
 
 import java.io.File;
 import java.io.IOException;

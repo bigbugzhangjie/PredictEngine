@@ -1,8 +1,8 @@
-package jack.security.datatype;
+package jack.translator.datatype;
 
 import jack.exception.UndefinedException;
-import jack.security.MappingRule;
-import jack.security.confuser.Obfuscater;
+import jack.translator.MappingRule;
+import jack.translator.confuser.Obfuscater;
 
 import java.util.ArrayList;
 import java.util.List;

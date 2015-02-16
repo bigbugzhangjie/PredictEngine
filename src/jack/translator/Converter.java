@@ -1,10 +1,10 @@
-package jack.security;
+package jack.translator;
 
 import jack.exception.FileFormatException;
 import jack.exception.UndefinedException;
 import jack.ml.data.RawCorpus;
-import jack.security.datatype.SuperType;
-import jack.security.exception.UndefinedType;
+import jack.translator.datatype.SuperType;
+import jack.translator.exception.UndefinedType;
 import jack.utility.FileTools;
 
 import java.io.File;

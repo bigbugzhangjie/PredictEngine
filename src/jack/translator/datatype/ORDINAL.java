@@ -1,7 +1,7 @@
-package jack.security.datatype;
+package jack.translator.datatype;
 
-import jack.security.MappingRule;
-import jack.security.exception.UndefinedFunction;
+import jack.translator.MappingRule;
+import jack.translator.exception.UndefinedFunction;
 
 import java.util.ArrayList;
 import java.util.List;

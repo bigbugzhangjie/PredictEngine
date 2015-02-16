@@ -1,4 +1,4 @@
-package test;
+package jack.example;
 
 import jack.utility.FileTools;
 

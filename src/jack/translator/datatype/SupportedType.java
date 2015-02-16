@@ -1,6 +1,6 @@
-package jack.security.datatype;
+package jack.translator.datatype;
 
-import jack.security.MappingRule;
+import jack.translator.MappingRule;
 
 public class SupportedType {
 	public static final String  BOOLEAN = "BOOLEAN";

@@ -1,16 +1,16 @@
-package jack.security;
+package jack.translator;
 
 import jack.exception.FileFormatException;
-import jack.security.datatype.BOOLEAN;
-import jack.security.datatype.DATE;
-import jack.security.datatype.FLOAT;
-import jack.security.datatype.INT;
-import jack.security.datatype.NOMINAL;
-import jack.security.datatype.ORDINAL;
-import jack.security.datatype.STRING;
-import jack.security.datatype.SuperType;
-import jack.security.datatype.SupportedType;
-import jack.security.exception.UndefinedType;
+import jack.translator.datatype.BOOLEAN;
+import jack.translator.datatype.DATE;
+import jack.translator.datatype.FLOAT;
+import jack.translator.datatype.INT;
+import jack.translator.datatype.NOMINAL;
+import jack.translator.datatype.ORDINAL;
+import jack.translator.datatype.STRING;
+import jack.translator.datatype.SuperType;
+import jack.translator.datatype.SupportedType;
+import jack.translator.exception.UndefinedType;
 import jack.utility.FileTools;
 
 import java.io.File;

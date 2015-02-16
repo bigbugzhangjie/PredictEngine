@@ -1,7 +1,7 @@
-package jack.security.datatype;
+package jack.translator.datatype;
 
-import jack.security.exception.UndefinedFunction;
-import jack.security.exception.UndefinedNOMINAL;
+import jack.translator.exception.UndefinedFunction;
+import jack.translator.exception.UndefinedNOMINAL;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package jack.security;
+package jack.translator;
 
 import jack.ml.data.RawCorpus;
 

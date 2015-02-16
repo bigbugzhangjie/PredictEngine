@@ -1,4 +1,4 @@
-package jack.security.confuser;
+package jack.translator.confuser;
 
 import jack.utility.StringTools;
 

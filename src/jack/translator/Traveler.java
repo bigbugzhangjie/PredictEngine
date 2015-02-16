@@ -1,7 +1,7 @@
-package jack.security;
+package jack.translator;
 
 import jack.ml.data.RawSample;
-import jack.security.datatype.SupportedType;
+import jack.translator.datatype.SupportedType;
 import jack.utility.DateFormatTool;
 
 import java.util.Collection;

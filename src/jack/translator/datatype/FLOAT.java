@@ -1,19 +1,19 @@
-package jack.security.datatype;
+package jack.translator.datatype;
 
-import jack.security.MappingRule;
-import jack.security.confuser.Function;
-import jack.security.exception.UndefinedFunction;
+import jack.translator.MappingRule;
+import jack.translator.confuser.Function;
+import jack.translator.exception.UndefinedFunction;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BOOLEAN extends SuperType {
+public class FLOAT extends SuperType {
 	public static final String STDIZE="STDIZE";
 
-	public BOOLEAN(String colname){
+	public FLOAT(String colname){
 		super(colname);
 	}
-	public BOOLEAN(String colname,MappingRule rule){
+	public FLOAT(String colname,MappingRule rule){
 		super(colname);
 		this.rule = rule;
 	}
@@ -60,7 +60,7 @@ public class BOOLEAN extends SuperType {
 
 	@Override
 	public String getTypeName() {
-		return SupportedType.BOOLEAN;
+		return SupportedType.FLOAT;
 	}
 	
 	

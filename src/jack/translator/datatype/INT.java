@@ -1,19 +1,19 @@
-package jack.security.datatype;
+package jack.translator.datatype;
 
-import jack.security.MappingRule;
-import jack.security.confuser.Function;
-import jack.security.exception.UndefinedFunction;
+import jack.translator.MappingRule;
+import jack.translator.confuser.Function;
+import jack.translator.exception.UndefinedFunction;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FLOAT extends SuperType {
+public class INT extends SuperType {
 	public static final String STDIZE="STDIZE";
 
-	public FLOAT(String colname){
+	public INT(String colname){
 		super(colname);
 	}
-	public FLOAT(String colname,MappingRule rule){
+	public INT(String colname,MappingRule rule){
 		super(colname);
 		this.rule = rule;
 	}
@@ -60,7 +60,7 @@ public class FLOAT extends SuperType {
 
 	@Override
 	public String getTypeName() {
-		return SupportedType.FLOAT;
+		return SupportedType.INT;
 	}
 	
 	

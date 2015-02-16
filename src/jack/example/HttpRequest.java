@@ -1,4 +1,4 @@
-package test;
+package jack.example;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +13,7 @@ public class HttpRequest {
 	
     /**
      * 向指定URL发送GET方法的请求 
-     * @param url	发送请求的URL
+     * @param url	发送请求的URL,e.g.  "http://www.baidu.com/s"  提示：不要忘记写上"http://" 
      * @param param	请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return URL	所代表远程资源的响应结果
      */
@@ -49,7 +49,7 @@ public class HttpRequest {
                 result += line+"\n";
             }
         } catch (Exception e) {
-            System.out.println("发送GET请求出现异常！" + e);
+            System.out.println("发送GET请求出现异常: ");
             e.printStackTrace();
         }
         // 使用finally块来关闭输入流
@@ -101,7 +101,7 @@ public class HttpRequest {
                 result += line+"\n";
             }
         } catch (Exception e) {
-            System.out.println("发送 POST 请求出现异常！"+e);
+            System.out.println("发送 POST 请求出现异常: ");
             e.printStackTrace();
         }
         //使用finally块来关闭输出流、输入流

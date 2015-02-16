@@ -1,7 +1,7 @@
-package jack.security.confuser;
+package jack.translator.confuser;
 
 import jack.exception.UndefinedException;
-import jack.security.MappingRule;
+import jack.translator.MappingRule;
 
 import java.util.ArrayList;
 import java.util.List;
