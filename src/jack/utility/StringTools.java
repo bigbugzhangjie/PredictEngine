@@ -3,6 +3,8 @@ package jack.utility;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  * 
  * @author bigbug
@@ -10,6 +12,8 @@ import java.util.List;
  * @modified Oct 13, 2014
  */
 public class StringTools {
+    
+
 
 	/**
 	 * 统计字符串str中子字符串sub的出现次数;	 
@@ -67,6 +71,32 @@ public class StringTools {
 		List<String> ret = new ArrayList<String>();
 		return ret;
 	}
+	/**
+	 * 以多种字符分割字符串
+	 * @param sep	除空格外，其他的分割符
+	 * @param str	待分割的字符串
+	 * @return
+	 */
+	public static String[] split(String sep,String str){
+	    Pattern pattern = Pattern.compile("["+sep+" ]+");   
+	    String[] strs = pattern.split(str);
+	    return strs;
+//	    for (int i=0;i<strs.length;i++) {   
+//	      System.out.println(strs[i]);   
+//	    } 
+	}	
+	/**
+	 * 以多种字符分割字符串，分割符包括： ,， 空格 |
+	 * 注：重复的分割符都会被去掉
+	 */
+	public static String[] split(String str){
+	    Pattern pattern = Pattern.compile("[,， |]+");   
+	    String[] strs = pattern.split(str);
+	    return strs;
+//	    for (int i=0;i<strs.length;i++) {   
+//	      System.out.println(strs[i]);   
+//	    } 
+	}
 	
 	public static String trim(String str){
 		String ret = str;
@@ -119,7 +149,7 @@ public class StringTools {
 //		char m = '*';
 //		int[] p = {3,8,5,0};
 //		System.out.println(replace(in,m,p));
-		
+
 	}
 	
 
