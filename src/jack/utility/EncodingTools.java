@@ -97,124 +97,24 @@ public class EncodingTools {
 	}
 
 	/**
-	 * 把指定文件或目录转换成指定的编码
-	 * 
-	 * @param fileName
-	 *            要转换的文件
-	 * @param fromCharsetName
-	 *            源文件的编码
-	 * @param toCharsetName
-	 *            要转换的编码
-	 * @throws Exception
-	 */
-	public static void convert(String fileName, String fromCharsetName,
-			String toCharsetName) throws Exception {
-		convert(new File(fileName), fromCharsetName, toCharsetName, null);
-	}
-
-	/**
-	 * 把指定文件或目录转换成指定的编码
-	 * 
-	 * @param file
-	 *            要转换的文件或目录
-	 * @param fromCharsetName
-	 *            源文件的编码
-	 * @param toCharsetName
-	 *            要转换的编码
-	 * @throws Exception
-	 */
-	public static void convert(File file, String fromCharsetName,
-			String toCharsetName) throws Exception {
-		convert(file, fromCharsetName, toCharsetName, null);
-	}
-
-	/**
-	 * 把指定文件或目录转换成指定的编码
-	 * 
-	 * @param file
-	 *            要转换的文件或目录
-	 * @param fromCharsetName
-	 *            源文件的编码
-	 * @param toCharsetName
-	 *            要转换的编码
-	 * @param filter
-	 *            文件名过滤器
-	 * @throws Exception
-	 */
-	public static void convert(String fileName, String fromCharsetName,
-			String toCharsetName, FilenameFilter filter) throws Exception {
-		convert(new File(fileName), fromCharsetName, toCharsetName, filter);
-	}
-
-	/**
-	 * 把指定文件或目录转换成指定的编码
-	 * 
-	 * @param file
-	 *            要转换的文件或目录
-	 * @param fromCharsetName
-	 *            源文件的编码
-	 * @param toCharsetName
-	 *            要转换的编码
-	 * @param filter
-	 *            文件名过滤器
-	 * @throws Exception
-	 */
-	public static void convert(File file, String fromCharsetName,
-			String toCharsetName, FilenameFilter filter) throws Exception {
-		if(fromCharsetName.equals(toCharsetName)){
-			System.out.println("source encoding equals target encoding.");
-			return;
-		}
-		if (file.isDirectory()) {
-			File[] fileList = null;
-			if (filter == null) {
-				fileList = file.listFiles();
-			} else {
-				fileList = file.listFiles(filter);
-			}
-			System.out.println("Found " + fileList.length
-					+ " files in directory: " + file.toString());
-			for (File f : fileList) {
-				convert(f, fromCharsetName, toCharsetName, filter);
-			}
-		} else {
-			if (filter == null
-					|| filter.accept(file.getParentFile(), file.getName())) {
-				System.out.println("\t converting file: " + file.getName());
-				System.out.println("\t\t reading...");
-				String fileContent = readFile(file, fromCharsetName);
-				System.out.println("\t\t writing...");
-				saveFile2Charset(file, toCharsetName, fileContent);
-			}
-		}
-	}
-
-	/**
 	 * 以指定编码方式读取文件，返回文件内容
-	 *
-	 * @param file
-	 *            要转换的文件
-	 * @param fromCharsetName
-	 *            源文件的编码
+	 * @param file	要转换的文件
+	 * @param fromCharsetName	源文件的编码
 	 * @return
 	 * @throws Exception
 	 */
 	private static String readFile(String filename, String fromCharsetName)
 			throws Exception {
 		return readFile(new File(filename),fromCharsetName);
-//		if (!Charset.isSupported(fromCharsetName)) {
-//			throw new UnsupportedCharsetException(fromCharsetName);
-//		}
-//		InputStream inputStream = new FileInputStream(file);
-//		InputStreamReader reader = new InputStreamReader(inputStream,
-//				fromCharsetName);
-//		char[] chs = new char[(int)file.length()];
-//		reader.read(chs);
-//		String str = new String(chs).trim();
-//		reader.close();
-//		return str;
 	}
 	
+	/**
+	 * 以指定编码方式读取文件，返回文件内容
+	 * @param file	要转换的文件
+	 * @param fromCharsetName	源文件的编码
+	 * @return
+	 * @throws Exception
+	 */
 	public static String readFile(File file, String encode) {
 		String fileContent = "";
 		try {
@@ -271,19 +171,18 @@ public class EncodingTools {
 
 	public static void convertFileEncode(File file, String fromEncode,
 			String toEncode) throws Exception {
-		String str = readFile(file, fromEncode);
-		saveFile(str, toEncode, file);
+		convert(file, fromEncode,toEncode);
 	}
 
 
 
-	public static String saveFile(String fileContent, String encode, File file) {
+	public static String saveFile(String str, String encode, File file) {
 		try {
 			FileOutputStream fos = new FileOutputStream(file);
 			OutputStreamWriter osw = new OutputStreamWriter(fos, encode);
 			BufferedWriter bw = new BufferedWriter(osw);
 
-			bw.write(fileContent);
+			bw.write(str);
 			bw.close();
 			osw.close();
 			fos.close();
@@ -292,56 +191,34 @@ public class EncodingTools {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return fileContent;
+		return str;
 	}
 
-	public static synchronized void convertDirectory(File dir) throws Exception {
-		if (!dir.exists() && !dir.isDirectory()) {
-			throw new IOException("[" + dir + "] not exsit or not a Directory");
-		}
-		convert(dir);
-	}
-
-	public static void convert(File dir) throws Exception {
-		if (dir.canRead() && dir.canWrite()) {
-			if (dir.isDirectory()) {// Directory
-				String[] files = dir.list();
-				if (files != null) {
-					for (int i = 0; i < files.length; i++) {
-						convert(new File(dir, files[i]));// 递归
-					}
-				}
-			} else {// File
-				convertGBK2UTF8(dir);
-			}
-		}
-	}
 
 	/**
-	 * 文件编码转换（适用于超大文件，不能一次性读入内存的）
+	 * 文件编码转换。递归的方式找到目录下所有符合要求的文件，并转码
 	 * @param from
 	 * @param to
-	 * @param file
+	 * @param directory
 	 * @throws Exception 
 	 */
-	public static void bigfileConvert(String from,String to, File file,FilenameFilter filter) throws Exception{
-		if (file.isDirectory()) {
+	public static void convert(String from,String to, File directory,FilenameFilter filter) throws Exception{
+		if (directory.isDirectory()) {
 			File[] fileList = null;
 			if (filter == null) {
-				fileList = file.listFiles();
+				fileList = directory.listFiles();
 			} else {
-				fileList = file.listFiles(filter);
+				fileList = directory.listFiles(filter);
 			}
 			System.out.println("Found " + fileList.length
-					+ " files in directory: " + file.toString());
+					+ " files in directory: " + directory.toString());
 			for (File f : fileList) {
-				bigfileConvert(from, to, f);
+				convert(f, from, to);
 			}
 		} else {
 			if (filter == null
-					|| filter.accept(file.getParentFile(), file.getName())) {
-				System.out.println("\t converting file: " + file.getName());
-				bigfileConvert(from, to, file);
+					|| filter.accept(directory.getParentFile(), directory.getName())) {
+				convert(directory,from, to);
 			}
 		}
 	}
@@ -354,8 +231,12 @@ public class EncodingTools {
 	 * @return
 	 * @throws Exception
 	 */
-	public static void bigfileConvert(String fromCharset, String toCharset, File infile)
+	public static void convert(File infile,String fromCharset, String toCharset)
 			throws Exception {
+		if(fromCharset.equals(toCharset)){
+			System.out.println("do nothing: converting from "+fromCharset +" to "+toCharset);
+		}
+		System.out.println("\t converting file: " + infile.getName());
 		File srcFile = infile;
 		InputStream in = new FileInputStream(infile);
 		BufferedReader br = new BufferedReader(new InputStreamReader(in, fromCharset));
@@ -373,7 +254,7 @@ public class EncodingTools {
 		while ((line = br.readLine()) != null) {
 			lineCounter++;
 			counter++;
-			if(counter%50000==0){
+			if(counter%100000==0){
 				System.out.println("\t\t\tread "+lineCounter+" lines.");
 				// 重新以新编码写入文件并返回值
 				bw.write(URLDecoder.decode(sb.toString(), toCharset));
@@ -412,9 +293,9 @@ public class EncodingTools {
 		File dir = new File("/bigdata/corpus/cif/");
 //		FilenameFilter filter = new FileNameSelector(".csv");
 //		bigfileConvert(from, to, dir, filter);
-		File[] list = FileTools.filter(dir, ".csv", 2);
+		File[] list = FileTools.filter(dir, ".csv.bak", 2);
 		for(File f:list){
-			bigfileConvert(from, to,f);
+			convert(f,from, to);
 		}
 
 	}

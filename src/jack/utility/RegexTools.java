@@ -20,6 +20,10 @@ public class RegexTools {
         ret=sb.toString();
         return ret;
     }  
+    
+    public static boolean validIDCard(String idcard){
+    	return ChinaIDCard.validateCard(idcard);	
+    }
 
 	/**
 	 * 验证IP地址
@@ -65,6 +69,8 @@ public class RegexTools {
             return false;  
         }  
     }
+    
+    
 	/*
 	  1 匹配IP地址的正则表达式：  /(\d+)\.(\d+)\.(\d+)\.(\d+)/g //
 	  2 整数或者小数：^[0-9]+\.{0,1}[0-9]{0,2}$
