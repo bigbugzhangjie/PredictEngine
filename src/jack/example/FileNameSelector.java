@@ -43,9 +43,6 @@ public class FileNameSelector implements FilenameFilter {
 			System.out.println("\t"+i+":\t" + file.getName());
 		}
 		
-		
-
-
 	}
 
 }

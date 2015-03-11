@@ -58,6 +58,23 @@ public class StringTools {
 		return count;
 	}
 	
+    /** 
+     * 中文提取 
+     * @param str  
+     */  
+    public static String extractChinese(String str){  
+    	String ret="";
+        String regex = "[//u4E00-//u9FFF]+";	//[//u4E00-//u9FFF]为汉字   
+        Pattern pattern = Pattern.compile(regex);  
+        Matcher matcher = pattern.matcher(str);  
+        StringBuffer sb = new StringBuffer();  
+        while(matcher.find()){  
+            sb.append(matcher.group());  
+        }  
+        ret=sb.toString();
+        return ret;
+    } 
+	
 	public static int getTermCount(Collection<String> dict, String term){
 		return 0;
 	}
