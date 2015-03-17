@@ -9,6 +9,16 @@ public class RegexTools {
     public static boolean isValidIDCard(String idcard){
     	return ChinaIDCard.validateCard(idcard);	
     }
+    
+	/**
+	 * 全是数字
+	 */
+	public static boolean isNumber(String str){
+		String reg = "^[0-9]*$";
+		 Pattern pattern = Pattern.compile(reg);
+		 Matcher matcher = pattern.matcher(str);
+		 return matcher.matches();
+	}
 
 	/**
 	 * 验证IP地址

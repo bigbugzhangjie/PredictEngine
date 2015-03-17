@@ -267,6 +267,8 @@ public class EncodingTools {
 			sb.append(s + "\r\n");// 一行+回车			
 
 		}
+		bw.write(URLDecoder.decode(sb.toString(), toCharset));
+		bw.flush();// 刷到文件中		
 		bw.close();
 		br.close();
 		srcFile.delete();// 删除原来文件
@@ -287,17 +289,21 @@ public class EncodingTools {
 
 //		// 大文件转码
 //		File file = new File("/home/bigbug/temp/客户地址_3.csv");
-//		bigfileConvert(from, to, file);
+//		convert(from, to, file);
 		
-//		// 大文件转码
-		File dir = new File("/bigdata/corpus/cif/");
-//		FilenameFilter filter = new FileNameSelector(".csv");
-//		bigfileConvert(from, to, dir, filter);
-		File[] list = FileTools.filter(dir, ".csv.bak", 2);
-		for(File f:list){
-			convert(f,from, to);
-		}
+//		// 大文件转码，递归转码当前目录及其子目录下的文件
+		File dir = new File("/home/bigbug/corpus/xw/all-tables-for-lhq");
+		FilenameFilter filter = new FileNameSelector("tsv");
+		convert(from, to, dir, filter);
+		
+		//大文件转码, 只转当前目录下的文件，不递归
+//		File dir = new File("/bigdata/corpus/cif/");
+//		File[] list = FileTools.filter(dir, ".csv.bak", 2);
+//		for(File f:list){
+//			convert(f,from, to);
+//		}
 
+		System.out.println("==========Finished!==========");
 	}
 
 }
