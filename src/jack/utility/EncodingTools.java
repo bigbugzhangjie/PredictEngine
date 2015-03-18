@@ -291,17 +291,17 @@ public class EncodingTools {
 //		File file = new File("/home/bigbug/temp/客户地址_3.csv");
 //		convert(from, to, file);
 		
-//		// 大文件转码，递归转码当前目录及其子目录下的文件
-		File dir = new File("/home/bigbug/corpus/xw/all-tables-for-lhq");
-		FilenameFilter filter = new FileNameSelector("tsv");
-		convert(from, to, dir, filter);
+////		// 大文件转码，递归转码当前目录及其子目录下的文件
+//		File dir = new File("/home/bigbug/corpus/xw/all-tables-for-lhq");
+//		FilenameFilter filter = new FileNameSelector("tsv");
+//		convert(from, to, dir, filter);
 		
 		//大文件转码, 只转当前目录下的文件，不递归
-//		File dir = new File("/bigdata/corpus/cif/");
-//		File[] list = FileTools.filter(dir, ".csv.bak", 2);
-//		for(File f:list){
-//			convert(f,from, to);
-//		}
+		File dir = new File("/bigdata/corpus/cif/");
+		File[] list = FileTools.filter(dir, ".csv", 2);
+		for(File f:list){
+			convert(f,from, to);
+		}
 
 		System.out.println("==========Finished!==========");
 	}
