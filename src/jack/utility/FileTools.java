@@ -189,15 +189,20 @@ public class FileTools extends FileUtils {
 			// 构造BufferedReader对象
 			br = new BufferedReader(new FileReader(file));
 
+			int ln = 0;
 			String line = null;
 			while ((line = br.readLine()) != null) {
+				ln++;
+				if(ln%1000000==0){
+					System.out.println("loading "+file.getName()+"\t"+ln+" lines.");
+				}
 				String[] cols = line.split(sep);
 				if(cols.length>=(index+1)){
 					String col = cols[index];
 					ret.add(col);
 				}else{
 //					 //将出错line文本打印到控制台
-					System.err.println("index overflow error: "+line);
+					System.err.println("index overflow error at line "+ln+ ": "+line);
 					if (!ignore){
 						ret.add(null);
 					}

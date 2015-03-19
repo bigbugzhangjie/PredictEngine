@@ -233,18 +233,33 @@ public class EncodingTools {
 	 */
 	public static void convert(File infile,String fromCharset, String toCharset)
 			throws Exception {
+		File newfile = new File(infile.getAbsolutePath()+"-utf8.tmp");
+		convert(infile,fromCharset,newfile,toCharset);
+		infile.delete();// 删除原来文件
+		newfile.renameTo(infile);
+		return ;
+	}
+	
+	/**
+	 * 编码转换（适用于超大文件，不能一次性读入内存的）
+	 * @param fromCharset	
+	 * @param toCharset	要转换的编码
+	 * @param infile	要转换的文件路径
+	 * @return
+	 * @throws Exception
+	 */
+	public static void convert(File infile,String fromCharset, File outfile,String toCharset)
+			throws Exception {
 		if(fromCharset.equals(toCharset)){
 			System.out.println("do nothing: converting from "+fromCharset +" to "+toCharset);
 		}
 		System.out.println("\t converting file: " + infile.getName());
-		File srcFile = infile;
 		InputStream in = new FileInputStream(infile);
 		BufferedReader br = new BufferedReader(new InputStreamReader(in, fromCharset));
 		StringBuffer sb = new StringBuffer();
 		
-		File newfile = new File(infile.getAbsolutePath()+"-utf8.tmp");
-		newfile.createNewFile();
-		OutputStream out = new FileOutputStream(newfile);
+		outfile.createNewFile();
+		OutputStream out = new FileOutputStream(outfile);
 		OutputStreamWriter writer = new OutputStreamWriter(out, toCharset);
 		BufferedWriter bw = new BufferedWriter(writer);
 		
@@ -271,8 +286,6 @@ public class EncodingTools {
 		bw.flush();// 刷到文件中		
 		bw.close();
 		br.close();
-		srcFile.delete();// 删除原来文件
-		newfile.renameTo(infile);
 		System.out.println("\t\t\tread "+lineCounter+" lines.");
 		return ;
 	}
@@ -301,6 +314,7 @@ public class EncodingTools {
 		File[] list = FileTools.filter(dir, ".csv", 2);
 		for(File f:list){
 			convert(f,from, to);
+			System.out.println("converted "+f.getName());
 		}
 
 		System.out.println("==========Finished!==========");
