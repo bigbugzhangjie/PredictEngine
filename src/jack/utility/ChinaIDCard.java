@@ -262,24 +262,21 @@ public class ChinaIDCard extends StringUtils {
 	 */
 	public static String[] validateIdCard10(String idCard) {
 		String[] info = new String[3];
+		info[2] = "false";
 		String card = idCard.replaceAll("[\\(|\\)]", "");
 		if (card.length() != 8 && card.length() != 9 && idCard.length() != 10) {
 			return null;
 		}
 		if (idCard.matches("^[a-zA-Z][0-9]{9}$")) { // 台湾
 			info[0] = "台湾";
-			System.out.println("11111");
 			String char2 = idCard.substring(1, 2);
 			if (char2.equals("1")) {
 				info[1] = "M";
-				System.out.println("MMMMMMM");
 			} else if (char2.equals("2")) {
 				info[1] = "F";
-				System.out.println("FFFFFFF");
 			} else {
 				info[1] = "N";
 				info[2] = "false";
-				System.out.println("NNNN");
 				return info;
 			}
 			info[2] = validateTWCard(idCard) ? "true" : "false";
@@ -287,6 +284,7 @@ public class ChinaIDCard extends StringUtils {
 			info[0] = "澳门";
 			info[1] = "N";
 			// TODO info[2] = validateMacaoCard
+			info[2] = "true";
 		} else if (idCard.matches("^[A-Z]{1,2}[0-9]{6}\\(?[0-9A]\\)?$")) { // 香港
 			info[0] = "香港";
 			info[1] = "N";

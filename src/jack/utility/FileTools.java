@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -325,7 +326,7 @@ public class FileTools extends FileUtils {
 	 * @param append	是否以追加的方式写入。true：在已有文件的结尾写入；false：覆盖原文件
 	 * @throws IOException 
 	 */
-	public static void writeFile(List<String> lines,File file,boolean append) throws IOException{
+	public static void writeFile(Collection<String> lines,File file,boolean append) throws IOException{
 		FileWriter w = new FileWriter(file,append);
 		for(String l : lines){
 			w.write(l+"\n");
