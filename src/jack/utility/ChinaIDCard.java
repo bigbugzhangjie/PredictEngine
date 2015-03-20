@@ -314,8 +314,13 @@ public class ChinaIDCard extends StringUtils {
 			sum = sum + Integer.valueOf(c + "") * iflag;
 			iflag--;
 		}
-		return (sum % 10 == 0 ? 0 : (10 - sum % 10)) == Integer.valueOf(end) ? true
-				: false;
+		boolean ret = false;
+		try{
+			ret = (sum % 10 == 0 ? 0 : (10 - sum % 10)) == Integer.valueOf(end); 
+		}catch(Exception e){
+			
+		}
+		return ret ;
 	}
 
 	/**
